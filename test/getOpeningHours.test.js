@@ -23,24 +23,24 @@ describe('Testes da função getOpeningHours', () => {
     expect(getOpeningHours('tUesdAy', '8:30-AM')).toEqual('The zoo is open');
   });
 
-  it('testa se ao passar um dia inválido retorna o erro The day must be valid. Example: Monday', () => {
-    expect(() => getOpeningHours('reivan').toThrow('The day must be valid. Example: Monday'));
+  it('testa se ao passar um dia invalido retorna um erro', () => {
+    expect(() => getOpeningHours('reivan')).toThrow('The day must be valid. Example: Monday');
   });
 
-  it('testa se ao passar horas inválidas retorna um erro', () => {
-    expect(() => getOpeningHours('tuesday', '25:30-AM').toThrow(Error));
+  it('testa se ao passar horas invalidas retorna um erro', () => {
+    expect(() => getOpeningHours('tuesday', '29:30-AM')).toThrow('The hour must be between 0 and 12');
   });
 
-  it('testa se ao passar minutos inválidas retorna um erro', () => {
-    expect(() => getOpeningHours('tuesday', '8:99-AM').toThrow(Error));
+  it('testa se ao passar minutos invalidos retorna um erro', () => {
+    expect(() => getOpeningHours('tuesday', '8:99-AM')).toThrow('The minutes must be between 0 and 59');
   });
 
-  it('testa se ao passar os minutos sem o caracter - retorna um erro', () => {
-    expect(() => getOpeningHours('tuesday', '8:30AM').toThrow(Error));
+  it('testa se ao passar sem o - retorna um erro', () => {
+    expect(() => getOpeningHours('tuesday', '8:30AM')).toThrow('The minutes should represent a number');
   });
 
-  it('testa se ao passar os parametros sem Am ou Pm retorna um erro', () => {
-    expect(() => getOpeningHours('tuesday', '8:30-ZM').toThrow(Error));
+  it('testa se ao passar o parametro AM / PM errad, retorna um erro', () => {
+    expect(() => getOpeningHours('tuesday', '8:30-ZM')).toThrow('The abbreviation must be \'AM\' or \'PM\'');
   });
 
   it('testa se ao passar os parametros de um horário onde o zoo esta aberto retorna a mensagem de open', () => {
@@ -48,6 +48,9 @@ describe('Testes da função getOpeningHours', () => {
   });
 
   it('testa se ao passar os parametros de um horário onde o zoo esta fechado retorna a mensagem de closed', () => {
-    expect(getOpeningHours('wednesday', '4:30-AM')).toEqual('The zoo is closed');
+    const closed = 'The zoo is closed';
+    expect(getOpeningHours('wednesday', '4:30-AM')).toEqual(closed);
+    expect(getOpeningHours('tuesday', '3:30-AM')).toEqual(closed);
+    expect(getOpeningHours('monday', '9:30-AM')).toEqual(closed);
   });
 });
