@@ -48,7 +48,5 @@ describe('Testes da função HandlerElephants', () => {
 
   it('testa se o parametro averageAge retorna a média de idade dos elefantes', () => {
     expect(handlerElephants('averageAge')).toBe(10.5);
-  })
-
-
+  });
 });
